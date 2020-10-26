@@ -24,7 +24,7 @@ func treeEquals(root1 string, root2 string) (bool, error) {
 	files2 := []string{}
 	filepath.Walk(root2, appendFilesFunc(&files2))
 
-	if ! reflect.DeepEqual(files1, files2) {
+	if !reflect.DeepEqual(files1, files2) {
 		return false, nil
 	}
 

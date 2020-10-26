@@ -39,17 +39,17 @@ load(
 
 container_pull(
     name = "node10",
-    registry = "index.docker.io",
-    repository = "library/node",
     #tag = "10",
     digest = "sha256:59c26cf58705ef08a6b52eaa3664db1820c70530f461bc8e983e4b37c8cc6be0",
+    registry = "index.docker.io",
+    repository = "library/node",
 )
 
 container_pull(
     name = "ubuntu2004",
+    digest = "sha256:93fd0705706e5bdda6cc450b384d8d5afb18fecc19e054fe3d7a2c8c2aeb2c83",
     registry = "index.docker.io",
     repository = "library/ubuntu",
-    digest = "sha256:93fd0705706e5bdda6cc450b384d8d5afb18fecc19e054fe3d7a2c8c2aeb2c83",
 )
 
 # rules_docker section ------------------------------------
@@ -64,7 +64,7 @@ http_archive(
     ],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 
@@ -91,5 +91,5 @@ go_repositories()
 # rules_go section ------------------------------------
 
 load("//thirdparty:formatter.bzl", "load_formatter_dependencies")
-load_formatter_dependencies()
 
+load_formatter_dependencies()

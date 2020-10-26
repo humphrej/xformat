@@ -31,6 +31,7 @@ var (
 			matcherFns: []func(string) bool{
 				matchesExt(".bazel"),
 				matchesExt(".bzl"),
+				matchesBase("WORKSPACE"),
 				matchesBase("BUILD")}},
 		{name: CPP,
 			matcherFns: []func(string) bool{

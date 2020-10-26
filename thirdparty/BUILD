@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//docker/util:run.bzl", "container_run_and_extract", "container_run_and_commit")
+load("@io_bazel_rules_docker//docker/util:run.bzl", "container_run_and_commit", "container_run_and_extract")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
 # compile tsfmt in a container
@@ -47,10 +47,10 @@ download_pkgs(
     name = "formatter_pkgs",
     image_tar = "@ubuntu2004//image",
     packages = [
+        "golang",
         "openjdk-11-jre",
         "python3",
         "python3-pip",
-        "golang",
     ],
 )
 
@@ -75,11 +75,11 @@ container_run_and_commit(
 container_image(
     name = "xformat_image",
     base = ":yapf_layer_commit.tar",
+    cmd = "/workspace",
+    entrypoint = ["%s/xformat" % FORMATTER_BIN],
+    env = {"PATH": "%s:/usr/local/bin:/usr/bin" % FORMATTER_BIN},
     tars = [
         ":binary_formatters_tar",
     ],
-    env = {"PATH": "%s:/usr/local/bin:/usr/bin" % FORMATTER_BIN},
-    cmd = "/workspace",
-    entrypoint = ["%s/xformat" % FORMATTER_BIN],
     workdir = FORMATTER_BIN,
 )
