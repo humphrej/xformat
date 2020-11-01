@@ -8,8 +8,7 @@ diff -r /testdata/unformatted /testdata/formatted
 ret=$?
 
 if [ "$ret" -eq 0 ]; then
-  echo PASS
+	echo PASS
 else
-  echo FAIL
+	echo FAIL
 fi
-

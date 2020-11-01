@@ -7,9 +7,6 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 container_image(
     name = "xformat_test_image",
     base = "//thirdparty:xformat_image",
-    tars = [
-        "//test/data:testdata_tar",
-    ],
     entrypoint = [
         "/bin/bash",
         "-e",
@@ -17,5 +14,8 @@ container_image(
     ],
     files = [
         "test_workload.sh",
+    ],
+    tars = [
+        "//test/data:testdata_tar",
     ],
 )
