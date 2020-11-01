@@ -16,7 +16,7 @@ go_test(
     srcs = [
         "filewalker_test.go",
         "matcher_test.go",
-        "tree_test.go",
     ],
     embed = [":go_default_library"],
+    rundir = ".",  # important to make go_test behave the same way as bazel
 )
