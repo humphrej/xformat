@@ -48,7 +48,7 @@ var (
 
 	commands = map[Format]CommandSetup{
 		JAVA:       {Command: "java", Args: "-jar /opt/formatters/bin/google-java-format.jar -r %s"},
-		SH:         {Command: "shfmt", Args: "-w %s"},
+		SH:         {Command: "shfmt", Args: "-i 2 -ci -w %s"},
 		BAZEL:      {Command: "buildifier", Args: "-mode=fix %s"},
 		CPP:        {Command: "clang-format", Args: "-i %s"},
 		TYPESCRIPT: {Command: "tsfmt", Args: "--no-tslint -r %s"},
