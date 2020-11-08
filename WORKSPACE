@@ -1,3 +1,5 @@
+workspace(name = "xformat")
+
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 
 # rules_docker section ------------------------------------
@@ -54,42 +56,51 @@ container_pull(
 
 # rules_docker section ------------------------------------
 
-# rules_go section ------------------------------------
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "a8d6b1b354d371a646d2f7927319974e0f9e52f73a2452d2b3877118169eb6bb",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.23.3/rules_go-v0.23.3.tar.gz",
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.23.3/rules_go-v0.23.3.tar.gz",
-    ],
-)
-
-load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "cdb02a887a7187ea4d5a27452311a75ed8637379a1287d8eeb952138ea485f7d",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.21.1/bazel-gazelle-v0.21.1.tar.gz",
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.21.1/bazel-gazelle-v0.21.1.tar.gz",
-    ],
-)
-
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
-
-gazelle_dependencies()
-
-load("//:go_dependencies.bzl", "go_repositories")
-
-# gazelle:repository_macro go_dependencies.bzl%go_repositories
-go_repositories()
-
-# rules_go section ------------------------------------
-
 load("//thirdparty:formatter.bzl", "load_formatter_dependencies")
 
 load_formatter_dependencies()
+
+# java section ------------------------------------
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+RULES_JVM_EXTERNAL_TAG = "3.1"
+
+RULES_JVM_EXTERNAL_SHA = "e246373de2353f3d34d35814947aa8b7d0dd1a58c2f7a6c41cfeaff3007c2d14"
+
+http_archive(
+    name = "rules_jvm_external",
+    sha256 = RULES_JVM_EXTERNAL_SHA,
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+)
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+GUAVA_VERSION = "28.1-jre"
+
+maven_install(
+    artifacts = [
+        "args4j:args4j:2.33",
+        "com.google.flogger:flogger:0.4",
+        "com.google.flogger:flogger-system-backend:jar:0.4",
+        "com.google.googlejavaformat:google-java-format:1.9",
+        "com.google.guava:guava:%s" % GUAVA_VERSION,
+        "com.google.truth:truth:1.0.1",
+        "junit:junit:4.12",
+    ],
+    fail_on_missing_checksum = False,
+    fetch_sources = True,
+    maven_install_json = "@xformat//thirdparty:maven_install.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+        "https://maven.google.com",
+    ],
+    version_conflict_policy = "pinned",
+)
+
+load("@maven//:defs.bzl", "pinned_maven_install")
+
+pinned_maven_install()
+
+# java section ------------------------------------

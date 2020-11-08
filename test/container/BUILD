@@ -6,7 +6,7 @@ load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
 container_image(
     name = "xformat_test_image",
-    base = "//thirdparty:xformat_image",
+    base = "//image:xformat_image",
     entrypoint = [
         "/bin/bash",
         "-e",

@@ -1,14 +1,14 @@
 #/bin/bash
 
 echo Running xformat...
-xformat /testdata/unformatted
+/usr/bin/java -cp $(</app/xformat/image/xformat_image.classpath) xformat.XFormatter /testdata/unformatted
 
 echo Diff is...
 diff -r /testdata/unformatted /testdata/formatted
 ret=$?
 
 if [ "$ret" -eq 0 ]; then
-	echo PASS
+  echo PASS
 else
-	echo FAIL
+  echo FAIL
 fi

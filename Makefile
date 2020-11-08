@@ -8,15 +8,18 @@ update-repos:
 	bazel run :gazelle -- update-repos -from_file=$(current_dir)/go.mod -to_macro=go_dependencies.bzl%go_repositories
 
 load_image: 
-	bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //thirdparty:xformat_image
+	bazel run //image:xformat_image
 
 load_test_image: 
-	bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //test/container:xformat_test_image
+	bazel run  //test/container:xformat_test_image
 
 fix_test_data:
-	docker run -ti -v $(current_dir)/test/data/formatted:/workspace bazel/thirdparty:xformat_image -v 1 -logtostderr /workspace
+	docker run -ti -v $(current_dir)/test/data/formatted:/workspace bazel/image:xformat_image -v 1  /workspace
 
 format:
-	docker run -ti -v $(current_dir):/workspace bazel/thirdparty:xformat_image -v 1 -logtostderr -ignore_directories=data /workspace
+	docker run -ti -v $(current_dir):/workspace bazel/image:xformat_image -v 1 --ignore_directories=data,.git,.ijwb /workspace
 
+
+repin:
+	bazel run @unpinned_maven//:pin
 

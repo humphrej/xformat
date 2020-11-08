@@ -3,6 +3,9 @@ package(default_visibility = ["//visibility:public"])
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
 load("@io_bazel_rules_docker//docker/util:run.bzl", "container_run_and_commit", "container_run_and_extract")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@io_bazel_rules_docker//docker/package_managers:install_pkgs.bzl", "install_pkgs")
+load("@io_bazel_rules_docker//docker/package_managers:download_pkgs.bzl", "download_pkgs")
+load("//:variables.bzl", "FORMATTER_BIN")
 
 # compile tsfmt in a container
 container_run_and_extract(
@@ -20,7 +23,6 @@ container_run_and_extract(
 )
 
 # build a tar file of the downloaded binaries and bazel-format
-FORMATTER_BIN = "/opt/formatters/bin"
 
 pkg_tar(
     name = "binary_formatters_tar",
@@ -31,16 +33,10 @@ pkg_tar(
         "@buildifier//file": "%s/buildifier" % FORMATTER_BIN,
         "@google_java_format_bin//file": "%s/google-java-format.jar" % FORMATTER_BIN,
         "@dhall_bin//:bin/dhall": "%s/dhall" % FORMATTER_BIN,
-        "//cmd:cmd": "%s/xformat" % FORMATTER_BIN,
     },
     mode = "0o555",
     package_dir = "/",
 )
-
-load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//docker/package_managers:install_pkgs.bzl", "install_pkgs")
-load("@io_bazel_rules_docker//docker/package_managers:download_pkgs.bzl", "download_pkgs")
-load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 
 # download ubuntu packages
 download_pkgs(
@@ -69,17 +65,4 @@ container_run_and_commit(
         "pip3 install yapf",
     ],
     image = ":formatter_bare_image.tar",
-)
-
-# build a final container containing everything
-container_image(
-    name = "xformat_image",
-    base = ":yapf_layer_commit.tar",
-    cmd = "/workspace",
-    entrypoint = ["%s/xformat" % FORMATTER_BIN],
-    env = {"PATH": "%s:/usr/local/bin:/usr/bin" % FORMATTER_BIN},
-    tars = [
-        ":binary_formatters_tar",
-    ],
-    workdir = FORMATTER_BIN,
 )
