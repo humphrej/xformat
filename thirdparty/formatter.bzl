@@ -25,14 +25,6 @@ def load_formatter_dependencies():
         downloaded_file_path = "shfmt",
     )
 
-    http_file(
-        name = "google_java_format_bin",
-        executable = True,
-        urls = ["https://github.com/google/google-java-format/releases/download/google-java-format-1.9/google-java-format-1.9-all-deps.jar"],
-        sha256 = "1d98720a5984de85a822aa32a378eeacd4d17480d31cba6e730caae313466b97",
-        downloaded_file_path = "google-java-format.jar",
-    )
-
     http_archive(
         name = "dhall_bin",
         sha256 = "f8312727bbd4af74d183efce2e22f7b7807246a600fcc85600945f4790e4294a",

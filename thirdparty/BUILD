@@ -31,7 +31,6 @@ pkg_tar(
         "@shfmt_bin//file": "%s/shfmt" % FORMATTER_BIN,
         ":tsfmt_compile/typescript-formatter/cli-linux": "%s/tsfmt" % FORMATTER_BIN,
         "@buildifier//file": "%s/buildifier" % FORMATTER_BIN,
-        "@google_java_format_bin//file": "%s/google-java-format.jar" % FORMATTER_BIN,
         "@dhall_bin//:bin/dhall": "%s/dhall" % FORMATTER_BIN,
     },
     mode = "0o555",
@@ -63,6 +62,7 @@ container_run_and_commit(
     name = "yapf_layer",
     commands = [
         "pip3 install yapf",
+        "groupadd -g 61000 nonroot && useradd -g 61000 -l -m -s /bin/false -u 61000 nonroot",
     ],
     image = ":formatter_bare_image.tar",
 )

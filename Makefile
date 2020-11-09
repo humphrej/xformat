@@ -17,7 +17,7 @@ fix_test_data:
 	docker run -ti -v $(current_dir)/test/data/formatted:/workspace bazel/image:xformat_image -v 1  /workspace
 
 format:
-	docker run -ti -v $(current_dir):/workspace bazel/image:xformat_image -v 1 --ignore_directories=data,.git,.ijwb /workspace
+	docker run -ti -u nonroot -v $(current_dir):/workspace bazel/image:xformat_image -v 1 --ignore_directories=data,.git,.ijwb /workspace
 
 
 repin:

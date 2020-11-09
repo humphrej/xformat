@@ -9,4 +9,6 @@ pkg_tar(
     visibility = [
         "//visibility:public",
     ],
+    mode = "0666",
+    owner = "61000.61000" # nonroot user - see //thirdparty:yapf_layer
 )
