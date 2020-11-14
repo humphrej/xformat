@@ -25,7 +25,8 @@ public enum Format {
       ExternalFormatter.create("clang-format", "-i", "%s")),
   TYPESCRIPT(
       List.of(matchesExt(".ts")), ExternalFormatter.create("tsfmt", "--no-tslint", "-r", "%s")),
-  PYTHON(List.of(matchesExt(".py")), ExternalFormatter.create("yapf", "-i", "%s"));
+  PYTHON(List.of(matchesExt(".py")), ExternalFormatter.create("yapf", "-i", "%s")),
+  PROTO(List.of(matchesExt(".proto")), ExternalFormatter.create("clang-format", "-i", "%s"));
 
   private final List<Predicate<Path>> matchPredicates;
   private final Supplier<Consumer<Path>> formatFnSupplier;

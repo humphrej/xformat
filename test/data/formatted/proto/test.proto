@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package test.v1;
+
+option java_multiple_files = true;
+option java_outer_classname = "TestProto";
+option java_package = "com.jumemo.resource.v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+message CreateTestRequest { string url = 1; }
+
+message CreateTestResponse {
+  string name = 1;
+  string url = 2;
+}
+
+message DeleteTestRequest { string name = 1; }
+
+message GetTestRequest { string name = 1; }
+
+message GetTestResponse {
+  string name = 1;
+  string url = 2;
+}
+
+message UpdateTestRequest {
+  string name = 1;
+  string url = 2;
+}
+
+message UpdateTestResponse {
+  string name = 1;
+  string url = 2;
+}
+
+service Test {
+  rpc Create(CreateTestRequest) returns (CreateTestResponse) {
+    option (google.api.http) = {
+      post : "/v1/test"
+    };
+  }
+  rpc Get(GetTestRequest) returns (GetTestResponse) {
+
+    option (google.api.http) = {
+      get : "/v1/test/{name}"
+    };
+  }
+  rpc Delete(DeleteTestRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete : "/v1/test/{name}"
+    };
+  }
+  rpc Update(UpdateTestRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put : "/v1/test/{name}"
+    };
+  }
+}
