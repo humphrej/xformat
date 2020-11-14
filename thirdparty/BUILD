@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@io_bazel_rules_docker//docker/util:run.bzl", "container_run_and_commit", "container_run_and_extract")
+load("@io_bazel_rules_docker//docker/util:run.bzl", "container_run_and_commit", "container_run_and_commit_layer", "container_run_and_extract")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//docker/package_managers:install_pkgs.bzl", "install_pkgs")
 load("@io_bazel_rules_docker//docker/package_managers:download_pkgs.bzl", "download_pkgs")
@@ -43,7 +43,8 @@ download_pkgs(
     image_tar = "@ubuntu2004//image",
     packages = [
         "golang",
-        "openjdk-11-jre",
+        #"openjdk-11-jre",
+        #"openjdk-11-jdk",
         "python3",
         "python3-pip",
     ],
@@ -65,4 +66,13 @@ container_run_and_commit(
         "groupadd -g 61000 nonroot && useradd -g 61000 -l -m -s /bin/false -u 61000 nonroot",
     ],
     image = ":formatter_bare_image.tar",
+)
+
+container_run_and_commit_layer(
+    name = "shrunken_jdk",
+    commands = [
+        "jlink --add-modules java.base,java.logging,jdk.compiler --verbose --strip-debug --compress 2  --no-header-files --no-man-pages --output /opt/java/jdk",
+        "ln -s /opt/java/jdk/bin/java /usr/bin/java",
+    ],
+    image = "@adoptopenjdk11//image",
 )

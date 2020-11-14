@@ -7,9 +7,12 @@ load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 load("//:variables.bzl", "FORMATTER_BIN")
 
 container_image(
-    name = "test_image_preparation",
+    name = "base_image_preparation",
     base = "//thirdparty:yapf_layer_commit.tar",
     env = {"PATH": "%s:/usr/local/bin:/usr/bin" % FORMATTER_BIN},
+    layers = [
+        "//thirdparty:shrunken_jdk",
+    ],
     tars = [
         "//thirdparty:binary_formatters_tar",
     ],
@@ -17,7 +20,7 @@ container_image(
 
 java_image(
     name = "xformat_image",
-    base = ":test_image_preparation",
+    base = ":base_image_preparation",
     main_class = "xformat.XFormatter",
     runtime_deps = [
         "//src/main/java/xformat:xformat_lib",

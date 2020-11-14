@@ -50,6 +50,14 @@ container_pull(
     repository = "library/ubuntu",
 )
 
+container_pull(
+    name = "adoptopenjdk11",
+    digest = "sha256:4561d5406dc9ee953f7141b5052be89dcec396e1789ba6aa7666434542ab2e13",
+    registry = "index.docker.io",
+    repository = "library/adoptopenjdk",
+    #tag = "11",
+)
+
 # rules_docker section ------------------------------------
 
 load("//thirdparty:formatter.bzl", "load_formatter_dependencies")
@@ -61,6 +69,7 @@ load_formatter_dependencies()
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 RULES_JVM_EXTERNAL_TAG = "3.3"
+
 RULES_JVM_EXTERNAL_SHA = "d85951a92c0908c80bd8551002d66cb23c3434409c814179c0ff026b53544dab"
 
 http_archive(

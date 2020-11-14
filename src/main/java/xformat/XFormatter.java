@@ -58,15 +58,23 @@ public class XFormatter implements Runnable {
     return Optional.empty();
   }
 
+  private static Runnable safeRunnable(Runnable r) {
+    return () -> {
+      try {
+        r.run();
+      } catch (Throwable t) {
+        LOGGER.atSevere().withCause(t).log("Exception thrown in executor");
+      }
+    };
+  }
+
+  private static void formatPath(Format f, Path p) {
+    LOGGER.atFine().log("Formatting as %s %s", f, p);
+    f.formatFnSupplier().get().accept(p);
+  }
+
   private void scheduleMatchAndFormat(Path p) {
-    executor.submit(
-        () ->
-            match(p)
-                .ifPresent(
-                    f -> {
-                      LOGGER.atFine().log("Formatting as %s %s", f, p);
-                      f.formatFnSupplier().get().accept(p);
-                    }));
+    executor.submit(safeRunnable(() -> match(p).ifPresent(f -> formatPath(f, p))));
   }
 
   @Override
