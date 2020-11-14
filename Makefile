@@ -1,17 +1,11 @@
 
 current_dir = $(shell pwd)
 
-update:
-	bazel run :gazelle -- update --exclude test/data
-
-update-repos:
-	bazel run :gazelle -- update-repos -from_file=$(current_dir)/go.mod -to_macro=go_dependencies.bzl%go_repositories
-
 load_image: 
-	bazel run //image:xformat_image
+	bazel run //image:xformat_image -- --norun
 
 load_test_image: 
-	bazel run  //test/container:xformat_test_image
+	bazel run  //test/container:xformat_test_image -- --norun
 
 run_test_image: 
 	docker run -ti bazel/test/container:xformat_test_image

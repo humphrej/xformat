@@ -93,7 +93,7 @@ public class XFormatter implements Runnable {
   }
 
   private void work() throws IOException {
-    LOGGER.atInfo().log("formats: %s", Arrays.toString(formats));
+    LOGGER.atFine().log("formats: %s", Arrays.toString(formats));
 
     Set<String> ignoredDirectories =
         Stream.of(ignoreDirectories.split(",")).collect(Collectors.toSet());
