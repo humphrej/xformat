@@ -6,6 +6,7 @@ import com.google.common.flogger.FluentLogger;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -31,6 +32,9 @@ public class XFormatter implements Runnable {
   @Option(name = "-v", metaVar = "0,1", usage = "Log Level")
   private static int logLevel = 0;
 
+  @Option(name = "--format", usage = "Formatters to include")
+  private static Format[] formats = Format.values();
+
   @Argument private List<String> roots = Lists.newArrayList();
 
   private static final long TIMEOUT_SECONDS = 30;
@@ -48,7 +52,7 @@ public class XFormatter implements Runnable {
 
   @VisibleForTesting
   static Optional<Format> match(Path path) {
-    for (Format format : Format.values()) {
+    for (Format format : formats) {
       for (var predicate : format.matchPredicates()) {
         if (predicate.test(path)) {
           return Optional.of(format);
@@ -89,6 +93,8 @@ public class XFormatter implements Runnable {
   }
 
   private void work() throws IOException {
+    LOGGER.atInfo().log("formats: %s", Arrays.toString(formats));
+
     Set<String> ignoredDirectories =
         Stream.of(ignoreDirectories.split(",")).collect(Collectors.toSet());
 

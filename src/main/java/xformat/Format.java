@@ -4,10 +4,13 @@ import static xformat.Matchers.matchesBase;
 import static xformat.Matchers.matchesExt;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public enum Format {
   JAVA(List.of(matchesExt(".java")), JavaFormatter.create()),
