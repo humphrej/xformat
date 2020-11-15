@@ -27,7 +27,7 @@ container_run_and_extract(
 pkg_tar(
     name = "binary_formatters_tar",
     files = {
-        "@clang_format_bin//:clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/clang-format": "%s/clang-format" % FORMATTER_BIN,
+        "@clang_format_bin//:clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04/bin/clang-format": "%s/clang-format" % FORMATTER_BIN,
         "@shfmt_bin//file": "%s/shfmt" % FORMATTER_BIN,
         ":tsfmt_compile/typescript-formatter/cli-linux": "%s/tsfmt" % FORMATTER_BIN,
         "@buildifier//file": "%s/buildifier" % FORMATTER_BIN,
