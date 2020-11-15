@@ -1,5 +1,21 @@
 # XFormat
-xformat is an extensible source code formatter indended to use as a stage in a multi-stage container based build.
+xformat is an extensible source code formatter designed for use as a stage in a multi-stage container
+based build.
+
+xformat delegates all formatting to other language dependent formatters which are packaged into the
+image at build time. The formatters are:
+
+| **Languages** | **Formatter** |
+|-----------|-----------|
+| BAZEL | https://github.com/bazelbuild/buildtools/tree/master/buildifier
+| DHALL | https://dhall-lang.org/
+| CPP, PROTO | http://clang.llvm.org/docs/ClangFormat.html
+| JAVA | https://github.com/google/google-java-format
+| GO | https://golang.org/pkg/go/format/
+| SH | https://github.com/mvdan/sh
+| TYPESCRIPT | https://github.com/vvakame/typescript-formatter
+
+Based on ideas in [StartupOS](https://github.com/google/startup-os).
 
 ## Building
 Use the supplied Makefile to build / run:
@@ -18,6 +34,23 @@ Use the supplied Makefile to build / run:
 ```
 SOURCE_CODE=<insert_path_here>
 docker run -ti -v $SOURCE_CODE:/workspace bazel/image:xformat_image -v 1 /workspace
+```
+
+
+## Command Options
+```
+<command> [options...] arguments...
+ VAL                                    : Directory roots where the formatting
+                                          should begin
+ --format [JAVA | BAZEL | DHALL | GO |  : Formatters to include (default:
+ SH | CPP | TYPESCRIPT | PYTHON |         [JAVA,BAZEL,DHALL,GO,SH,CPP,TYPESCRIPT
+ PROTO]                                   ,PYTHON,PROTO])
+ --ignore_directories d1,d2             : Ignored directories, split by commas
+                                          (default: )
+ -v 0,1                                 : Log Level (default: 0)
+
+  Example: <command> --format [JAVA | BAZEL | DHALL | GO | SH | CPP | TYPESCRIPT | PYTHON | PROTO] --ignore_directories d1,d2 -v 0,1
+
 ```
 
 ## GCP Cloud Builder usage

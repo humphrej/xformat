@@ -35,7 +35,8 @@ public class XFormatter implements Runnable {
   @Option(name = "--format", usage = "Formatters to include")
   private static Format[] formats = Format.values();
 
-  @Argument private List<String> roots = Lists.newArrayList();
+  @Argument(usage = "Directory roots where the formatting should begin", required = true)
+  private List<String> roots = Lists.newArrayList();
 
   private static final long TIMEOUT_SECONDS = 30;
   private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();

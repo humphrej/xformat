@@ -45,7 +45,7 @@ container_pull(
 
 container_pull(
     name = "ubuntu2004",
-    digest = "sha256:93fd0705706e5bdda6cc450b384d8d5afb18fecc19e054fe3d7a2c8c2aeb2c83",
+    digest = "sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956",
     registry = "index.docker.io",
     repository = "library/ubuntu",
 )
