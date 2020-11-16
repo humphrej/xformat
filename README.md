@@ -8,10 +8,11 @@ image at build time. The formatters are:
 | **Languages** | **Formatter** |
 |-----------|-----------|
 | BAZEL | https://github.com/bazelbuild/buildtools/tree/master/buildifier
-| DHALL | https://dhall-lang.org/
 | CPP, PROTO | http://clang.llvm.org/docs/ClangFormat.html
-| JAVA | https://github.com/google/google-java-format
+| DHALL | https://dhall-lang.org/
 | GO | https://golang.org/pkg/go/format/
+| JAVA | https://github.com/google/google-java-format
+| PYTHON | https://github.com/google/yapf 
 | SH | https://github.com/mvdan/sh
 | TYPESCRIPT | https://github.com/vvakame/typescript-formatter
 
