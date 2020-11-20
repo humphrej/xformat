@@ -2,15 +2,9 @@ package xformat;
 
 import static org.kohsuke.args4j.OptionHandlerFilter.ALL;
 
-import java.io.File;
 import java.io.PrintStream;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
-import org.kohsuke.args4j.OptionDef;
-import org.kohsuke.args4j.spi.DelimitedOptionHandler;
-import org.kohsuke.args4j.spi.FileOptionHandler;
-import org.kohsuke.args4j.spi.Setter;
-import org.kohsuke.args4j.spi.StringOptionHandler;
 
 /** A Helper for args4j */
 public class ArgumentParser {
@@ -73,8 +67,7 @@ public class ArgumentParser {
     try {
       parser.parseArgument(args);
     } catch (CmdLineException e) {
-      PrintStream ps = errorPrintWriter;
-      ps.println(e.getMessage());
+      errorPrintWriter.println(e.getMessage());
       printUsage();
       if (terminateOnError) {
         System.exit(1);

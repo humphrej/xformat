@@ -19,7 +19,7 @@ public class FileWalkerTest {
     makeTestData(tempDir);
 
     List<Path> visited = Lists.newArrayList();
-    FileWalker.create(List.of(tempDir.toString()), Set.of("ignored"), x -> visited.add(x)).walk();
+    FileWalker.create(List.of(tempDir.toString()), Set.of("ignored"), visited::add).walk();
 
     assertThat(visited)
         .containsExactly(tempDir.resolve("root1/a1.txt"), tempDir.resolve("root1/level2/a2.txt"));

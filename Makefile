@@ -21,3 +21,6 @@ format:
 repin:
 	bazel run @unpinned_maven//:pin
 
+graph: 
+	bazel query 'deps(//...)' --nohost_deps --noimplicit_deps --output=graph | dot -Tpng > graph.png
+

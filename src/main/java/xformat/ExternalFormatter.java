@@ -30,11 +30,7 @@ public class ExternalFormatter {
 
       StringBuilder output = new StringBuilder();
 
-      gobble(
-          process.getInputStream(),
-          x -> {
-            output.append(x).append("\n");
-          });
+      gobble(process.getInputStream(), x -> output.append(x).append("\n"));
 
       int exitCode = process.waitFor();
       LOGGER.atFiner().log("Process exited with exit code %d and output:\n%s%n", exitCode, output);

@@ -33,15 +33,14 @@ public class FileWalker {
   private class MyFileVisitor extends SimpleFileVisitor<Path> {
 
     @Override
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
       fileVisitor.accept(file);
 
       return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
-        throws IOException {
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
       if (ignoredDirectories.contains(finalPart(dir))) {
         return FileVisitResult.SKIP_SUBTREE;
       }

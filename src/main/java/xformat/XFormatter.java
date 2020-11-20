@@ -134,7 +134,7 @@ public class XFormatter implements Runnable {
         "java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT %1$tL] [%4$-7s] %5$s %6$s %n");
   }
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     XFormatter application = new XFormatter();
     ArgumentParser.builder(args, application).withTerminationOnError(true).build().parse();
 
