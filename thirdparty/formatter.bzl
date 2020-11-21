@@ -31,3 +31,19 @@ def load_formatter_dependencies():
         urls = ["https://github.com/dhall-lang/dhall-haskell/releases/download/1.36.0/dhall-1.36.0-x86_64-linux.tar.bz2"],
         build_file_content = "exports_files(['bin/dhall'])",
     )
+
+    http_file(
+        name = "jq_bin",
+        executable = True,
+        sha256 = "af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44",
+        urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
+        downloaded_file_path = "jq",
+    )
+
+    http_file(
+        name = "yq_bin",
+        executable = True,
+        sha256 = "93fa4bddd27cf7c21b23110039cf7def1069ebbc8895bb9d2b7e1a639127e881",
+        urls = ["https://github.com/mikefarah/yq/releases/download/4.0.0-alpha1/yq_linux_amd64"],
+        downloaded_file_path = "yq",
+    )

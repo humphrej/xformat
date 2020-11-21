@@ -12,9 +12,11 @@ image at build time. The formatters are:
 | DHALL | https://dhall-lang.org/
 | GO | https://golang.org/pkg/go/format/
 | JAVA | https://github.com/google/google-java-format
+| JSON | https://github.com/stedolan/jq
 | PYTHON | https://github.com/google/yapf 
 | SH | https://github.com/mvdan/sh
 | TYPESCRIPT | https://github.com/vvakame/typescript-formatter
+| YAML | https://github.com/mikefarah/yq
 
 Based on ideas in [StartupOS](https://github.com/google/startup-os).
 
@@ -45,7 +47,7 @@ docker run -ti -v $SOURCE_CODE:/workspace bazel/image:xformat_image -v 1 /worksp
                                           should begin
  --format [JAVA | BAZEL | DHALL | GO |  : Formatters to include (default:
  SH | CPP | TYPESCRIPT | PYTHON |         [JAVA,BAZEL,DHALL,GO,SH,CPP,TYPESCRIPT
- PROTO]                                   ,PYTHON,PROTO])
+ PROTO | JSON | YAML]                     ,PYTHON,PROTO,JSON,YAML])
  --ignore_directories d1,d2             : Ignored directories, split by commas
                                           (default: )
  -v 0,1                                 : Log Level (default: 0)
