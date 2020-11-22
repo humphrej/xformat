@@ -1,6 +1,8 @@
 #!/bin/bash
 
-func1() {
+func1()
+
+ {
 	echo jasper
 }
 
