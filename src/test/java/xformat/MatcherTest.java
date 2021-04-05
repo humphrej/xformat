@@ -41,6 +41,8 @@ public class MatcherTest {
           {Path.of("prefixed/foo.py"), Optional.of(Format.PYTHON)},
           {Path.of("foo.go"), Optional.of(Format.GO)},
           {Path.of("prefixed/foo.go"), Optional.of(Format.GO)},
+          {Path.of("foo.clj"), Optional.of(Format.CLOJURE)},
+          {Path.of("prefixed/foo.clj"), Optional.of(Format.CLOJURE)},
           {Path.of("foo.txt"), Optional.empty()},
         });
   }

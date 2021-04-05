@@ -8,6 +8,7 @@ image at build time. The formatters are:
 | **Languages** | **Formatter** |
 |-----------|-----------|
 | BAZEL | https://github.com/bazelbuild/buildtools/tree/master/buildifier
+| CLOJURE | https://github.com/weavejester/cljfmt
 | CPP, PROTO | http://clang.llvm.org/docs/ClangFormat.html
 | DHALL | https://dhall-lang.org/
 | GO | https://golang.org/pkg/go/format/
@@ -45,7 +46,7 @@ docker run -ti -v $SOURCE_CODE:/workspace bazel/image:xformat_image -v 1 /worksp
                                           should begin
  --format [JAVA | BAZEL | DHALL | GO |  : Formatters to include (default:
  SH | CPP | TYPESCRIPT | PYTHON |         [JAVA,BAZEL,DHALL,GO,SH,CPP,TYPESCRIPT
- PROTO]                                   ,PYTHON,PROTO])
+ PROTO | CLOJURE]                         ,PYTHON,PROTO,CLOJURE])
  --ignore_directories d1,d2             : Ignored directories, split by commas
                                           (default: )
  -v 0,1                                 : Log Level (default: 0)
