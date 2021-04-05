@@ -26,11 +26,18 @@ public enum Format {
   TYPESCRIPT(
       List.of(matchesExt(".ts")), ExternalFormatter.create("tsfmt", "--no-tslint", "-r", "%s")),
   PYTHON(List.of(matchesExt(".py")), ExternalFormatter.create("yapf", "-i", "%s")),
-  PROTO(List.of(matchesExt(".proto")), ExternalFormatter.create("clang-format", "-i", "%s"));
+  PROTO(List.of(matchesExt(".proto")), ExternalFormatter.create("clang-format", "-i", "%s")),
+  CLOJURE(List.of(matchesExt(".clj")), ClojureFormatter.create());
 
   private final List<Predicate<Path>> matchPredicates;
   private final Supplier<Consumer<Path>> formatFnSupplier;
 
+  /**
+   * Constructs
+   *
+   * @param matchPredicates a list of predicates that match a file
+   * @param formatFnSupplier a supplier of a function that consumes (and formats) a file
+   */
   Format(List<Predicate<Path>> matchPredicates, Supplier<Consumer<Path>> formatFnSupplier) {
     this.matchPredicates = matchPredicates;
     this.formatFnSupplier = formatFnSupplier;

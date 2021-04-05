@@ -68,9 +68,9 @@ load_formatter_dependencies()
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-RULES_JVM_EXTERNAL_TAG = "3.3"
+RULES_JVM_EXTERNAL_TAG = "4.0"
 
-RULES_JVM_EXTERNAL_SHA = "d85951a92c0908c80bd8551002d66cb23c3434409c814179c0ff026b53544dab"
+RULES_JVM_EXTERNAL_SHA = "31701ad93dbfe544d597dbe62c9a1fdd76d81d8a9150c2bf1ecf928ecdf97169"
 
 http_archive(
     name = "rules_jvm_external",
@@ -80,12 +80,38 @@ http_archive(
 )
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
+load("@rules_jvm_external//:specs.bzl", "maven")
 
 GUAVA_VERSION = "28.1-jre"
 
 maven_install(
     artifacts = [
         "args4j:args4j:2.33",
+        # circular dependencies without these exclusions Using versions from rules_clojure https://github.com/simuons/rules_clojure/blob/master/repositories.bzl
+        maven.artifact(
+            group = "cljfmt",
+            artifact = "cljfmt",
+            version = "0.7.0",
+            exclusions = [
+                "org.clojure:clojure",
+            ],
+        ),
+        maven.artifact(
+            group = "org.clojure",
+            artifact = "clojure",
+            version = "1.10.1",
+            exclusions = [
+                "org.clojure:spec.alpha",
+            ],
+        ),
+        maven.artifact(
+            group = "org.clojure",
+            artifact = "spec.alpha",
+            version = "0.2.176",
+            exclusions = [
+                "org.clojure:clojure",
+            ],
+        ),
         "com.google.flogger:flogger:0.4",
         "com.google.flogger:flogger-system-backend:jar:0.4",
         "com.google.googlejavaformat:google-java-format:1.9",
@@ -99,6 +125,7 @@ maven_install(
     repositories = [
         "https://repo1.maven.org/maven2",
         "https://maven.google.com",
+        "https://repo.clojars.org",
     ],
     version_conflict_policy = "pinned",
 )
@@ -108,3 +135,21 @@ load("@maven//:defs.bzl", "pinned_maven_install")
 pinned_maven_install()
 
 # java section ------------------------------------
+# rules_clojure section ------------------------------------
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "rules_clojure",
+    sha256 = "c841fbf94af331f0f8f02de788ca9981d7c73a10cec798d3be0dd4f79d1d627d",
+    strip_prefix = "rules_clojure-c044cb8608a2c3180cbfee89e66bbeb604afb146",
+    urls = ["https://github.com/simuons/rules_clojure/archive/c044cb8608a2c3180cbfee89e66bbeb604afb146.tar.gz"],
+)
+
+load("@rules_clojure//:repositories.bzl", "rules_clojure_dependencies", "rules_clojure_toolchains")
+
+rules_clojure_dependencies()
+
+rules_clojure_toolchains()
+
+# rules_clojure section ------------------------------------

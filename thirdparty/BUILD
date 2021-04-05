@@ -71,8 +71,18 @@ container_run_and_commit(
 container_run_and_commit_layer(
     name = "shrunken_jdk",
     commands = [
-        "jlink --add-modules java.base,java.logging,jdk.compiler --verbose --strip-debug --compress 2  --no-header-files --no-man-pages --output /opt/java/jdk",
+        "jlink --add-modules java.base,java.logging,jdk.compiler,java.sql  --verbose --strip-debug --compress 2  --no-header-files --no-man-pages --output /opt/java/jdk",
         "ln -s /opt/java/jdk/bin/java /usr/bin/java",
     ],
     image = "@adoptopenjdk11//image",
+)
+
+load("@rules_clojure//:rules.bzl", "clojure_java_library")
+
+clojure_java_library(
+    name = "cljfmt_java_library",
+    namespaces = ["cljfmt.core"],
+    deps = [
+        "@maven//:cljfmt_cljfmt",
+    ],
 )
