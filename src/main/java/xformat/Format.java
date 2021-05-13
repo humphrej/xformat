@@ -27,7 +27,9 @@ public enum Format {
       List.of(matchesExt(".ts")), ExternalFormatter.create("tsfmt", "--no-tslint", "-r", "%s")),
   PYTHON(List.of(matchesExt(".py")), ExternalFormatter.create("yapf", "-i", "%s")),
   PROTO(List.of(matchesExt(".proto")), ExternalFormatter.create("clang-format", "-i", "%s")),
-  CLOJURE(List.of(matchesExt(".clj"), matchesExt(".cljc")), ClojureFormatter.create());
+  CLOJURE(
+      List.of(matchesExt(".clj"), matchesExt(".cljc"), matchesExt(".edn")),
+      ClojureFormatter.create());
 
   private final List<Predicate<Path>> matchPredicates;
   private final Supplier<Consumer<Path>> formatFnSupplier;
