@@ -25,7 +25,7 @@ public class ClojureFormatter {
       // move temporary file to original
       Files.move(tempFilePath, path, StandardCopyOption.REPLACE_EXISTING);
     } catch (Exception e) {
-      LOGGER.atWarning().withCause(e).log("Error formatting %s", path, e);
+      LOGGER.atWarning().withCause(e).log("Error formatting %s", path);
     }
   }
 

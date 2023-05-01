@@ -77,12 +77,12 @@ container_run_and_commit_layer(
     image = "@adoptopenjdk11//image",
 )
 
-load("@rules_clojure//:rules.bzl", "clojure_java_library")
-
-clojure_java_library(
-    name = "cljfmt_java_library",
-    namespaces = ["cljfmt.core"],
-    deps = [
-        "@maven//:cljfmt_cljfmt",
-    ],
-)
+#load("@rules_clojure//:rules.bzl", "clojure_java_library")
+#
+#clojure_java_library(
+#name = "cljfmt_java_library",
+#namespaces = ["cljfmt.core"],
+#deps = [
+#"@maven//:cljfmt_cljfmt",
+#],
+#)

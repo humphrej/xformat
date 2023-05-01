@@ -9,4 +9,5 @@
 (defn -cljfmtshim [s]
   ((cljfmt/wrap-normalize-newlines #(cljfmt/reformat-string % {})) s))
 
+(def x 3)
 
