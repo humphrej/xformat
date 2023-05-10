@@ -27,7 +27,7 @@ container_run_and_extract(
 pkg_tar(
     name = "binary_formatters_tar",
     files = {
-        "@clang_format_bin//:clang+llvm-11.0.0-x86_64-linux-gnu-ubuntu-20.04/bin/clang-format": "%s/clang-format" % FORMATTER_BIN,
+        "@clang_format_bin//:clang+llvm-16.0.3-x86_64-linux-gnu-ubuntu-22.04/bin/clang-format": "%s/clang-format" % FORMATTER_BIN,
         "@shfmt_bin//file": "%s/shfmt" % FORMATTER_BIN,
         ":tsfmt_compile/typescript-formatter/cli-linux": "%s/tsfmt" % FORMATTER_BIN,
         "@buildifier//file": "%s/buildifier" % FORMATTER_BIN,
@@ -40,7 +40,7 @@ pkg_tar(
 # download ubuntu packages
 download_pkgs(
     name = "formatter_pkgs",
-    image_tar = "@ubuntu2004//image",
+    image_tar = "@ubuntu2204//image",
     packages = [
         "golang",
         #"openjdk-11-jre",
@@ -53,7 +53,7 @@ download_pkgs(
 # install packages into a base ubuntu
 install_pkgs(
     name = "formatter_bare_image",
-    image_tar = "@ubuntu2004//image",
+    image_tar = "@ubuntu2204//image",
     installables_tar = ":formatter_pkgs.tar",
     output_image_name = "formatter_bare_image",
 )
@@ -74,7 +74,7 @@ container_run_and_commit_layer(
         "jlink --add-modules java.base,java.logging,jdk.compiler,java.sql  --verbose --strip-debug --compress 2  --no-header-files --no-man-pages --output /opt/java/jdk",
         "ln -s /opt/java/jdk/bin/java /usr/bin/java",
     ],
-    image = "@adoptopenjdk11//image",
+    image = "@eclipse-temurin//image",
 )
 
 #load("@rules_clojure//:rules.bzl", "clojure_java_library")

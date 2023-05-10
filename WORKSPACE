@@ -44,17 +44,17 @@ container_pull(
 )
 
 container_pull(
-    name = "ubuntu2004",
-    digest = "sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956",
+    name = "ubuntu2204",
+    digest = "sha256:ca5534a51dd04bbcebe9b23ba05f389466cf0c190f1f8f182d7eea92a9671d00",
     registry = "index.docker.io",
     repository = "library/ubuntu",
 )
 
 container_pull(
-    name = "adoptopenjdk11",
-    digest = "sha256:4561d5406dc9ee953f7141b5052be89dcec396e1789ba6aa7666434542ab2e13",
+    name = "eclipse-temurin",
+    digest = "sha256:9de4aabba13e1dd532283497f98eff7bc89c2a158075f0021d536058d3f5a082",
     registry = "index.docker.io",
-    repository = "library/adoptopenjdk",
+    repository = "library/eclipse-temurin",
     #tag = "11",
 )
 
@@ -93,49 +93,49 @@ rules_jvm_external_setup()
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
 
-GUAVA_VERSION = "28.1-jre"
+GUAVA_VERSION = "31.1-jre"
 
 maven_install(
     artifacts = [
         "args4j:args4j:2.33",
         # circular dependencies without these exclusions Using versions from rules_clojure https://github.com/simuons/rules_clojure/blob/master/repositories.bzl
         maven.artifact(
-            group = "org.clojure",
             artifact = "clojure",
+            exclusions = [
+                "org.clojure:spec.alpha",
+                "org.clojure:core.specs.alpha",
+            ],
+            group = "org.clojure",
             version = "1.11.1",
-            exclusions = [
-                "org.clojure:spec.alpha",
-                "org.clojure:core.specs.alpha",
-            ],
         ),
         maven.artifact(
-            group = "org.clojure",
             artifact = "spec.alpha",
-            version = "0.3.218",
             exclusions = ["org.clojure:clojure"],
+            group = "org.clojure",
+            version = "0.3.218",
         ),
         maven.artifact(
-            group = "org.clojure",
             artifact = "core.specs.alpha",
-            version = "0.2.62",
             exclusions = [
                 "org.clojure:clojure",
                 "org.clojure:spec.alpha",
             ],
+            group = "org.clojure",
+            version = "0.2.62",
         ),
         maven.artifact(
-            group = "cljfmt",
             artifact = "cljfmt",
-            version = "0.7.0",
             exclusions = [
                 "org.clojure:clojure",
                 "org.clojure:spec.alpha",
                 "org.clojure:core.specs.alpha",
             ],
+            group = "cljfmt",
+            version = "0.9.2",
         ),
         "com.google.flogger:flogger:0.4",
         "com.google.flogger:flogger-system-backend:jar:0.4",
-        "com.google.googlejavaformat:google-java-format:1.9",
+        "com.google.googlejavaformat:google-java-format:1.17.0",
         "com.google.guava:guava:%s" % GUAVA_VERSION,
         "com.google.truth:truth:1.0.1",
         "junit:junit:4.12",
@@ -157,21 +157,6 @@ pinned_maven_install()
 
 # java section ------------------------------------
 # rules_clojure section ------------------------------------
-
-#load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-#http_archive(
-#name = "rules_clojure",
-#sha256 = "c841fbf94af331f0f8f02de788ca9981d7c73a10cec798d3be0dd4f79d1d627d",
-#strip_prefix = "rules_clojure-c044cb8608a2c3180cbfee89e66bbeb604afb146",
-#urls = ["https://github.com/simuons/rules_clojure/archive/c044cb8608a2c3180cbfee89e66bbeb604afb146.tar.gz"],
-#)
-
-#load("@rules_clojure//:repositories.bzl", "rules_clojure_dependencies", "rules_clojure_toolchains")
-
-#rules_clojure_dependencies()
-
-#rules_clojure_toolchains()
 
 RULES_CLOJURE_SHA = "bad7ead30e3426425d4ae44d974a2bfa868d61e8"
 
