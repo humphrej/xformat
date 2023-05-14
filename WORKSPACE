@@ -52,10 +52,10 @@ container_pull(
 
 container_pull(
     name = "eclipse-temurin",
-    digest = "sha256:9de4aabba13e1dd532283497f98eff7bc89c2a158075f0021d536058d3f5a082",
+    digest = "sha256:9dd6a19e4819b066aa2bd8e54d5988a49cca29736fe5447cb0a57daa975f8935",
     registry = "index.docker.io",
     repository = "library/eclipse-temurin",
-    #tag = "11",
+    #tag = "17-jammy",
 )
 
 # rules_docker section ------------------------------------

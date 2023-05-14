@@ -1,7 +1,15 @@
 #/bin/bash
 
 echo Running xformat...
-/usr/bin/java -cp $(</app/xformat/image/xformat_image.classpath) xformat.XFormatter /testdata/unformatted
+
+JVMARGS="--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED \
+--add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED \
+--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
+--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
+--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
+--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED"
+
+/usr/bin/java $JVMARGS -cp $(</app/xformat/image/xformat_image.classpath) xformat.XFormatter /testdata/unformatted
 
 echo Diff is...
 diff -Br /testdata/unformatted /testdata/formatted
